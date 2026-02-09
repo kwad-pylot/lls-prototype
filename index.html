@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lawful Living Solution</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --navy: #1a2332;
+  --navy-light: #243044;
+  --gold: #c9a84c;
+  --gold-light: #e8d48b;
+  --cream: #faf8f0;
+  --white: #ffffff;
+  --gray: #6b7280;
+  --gray-light: #e5e7eb;
+  --green: #22c55e;
+  --blue: #3b82f6;
+  --red: #ef4444;
+  --orange: #f59e0b;
+}
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--cream); color: #1f2937; }
+.hidden { display: none !important; }
+
+/* ===== NAVIGATION ===== */
+.top-nav {
+  background: var(--navy);
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gold);
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.nav-logo svg { width: 28px; height: 28px; }
+.nav-links { display: flex; gap: 0.5rem; }
+.nav-links button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+.nav-links button:hover, .nav-links button.active {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.1);
+}
+.nav-badge {
+  background: var(--red);
+  color: white;
+  font-size: 0.65rem;
+  padding: 1px 5px;
+  border-radius: 10px;
+  margin-left: 4px;
+  vertical-align: top;
+}
+
+/* ===== LANDING PAGE ===== */
+.landing { min-height: 100vh; }
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #2d3f58 100%);
+  padding: 5rem 2rem;
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--gold);
+  position: relative;
+}
+.hero p {
+  font-size: 1.25rem;
+  color: #cbd5e1;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+.hero-cta {
+  display: inline-flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.btn {
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-gold { background: var(--gold); color: var(--navy); }
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+.btn-outline { background: transparent; border-color: var(--gold); color: var(--gold); }
+.btn-outline:hover { background: rgba(201,168,76,0.15); }
+.btn-sm { padding: 0.4rem 1rem; font-size: 0.85rem; }
+
+.disclaimer-bar {
+  background: var(--navy-light);
+  color: #94a3b8;
+  text-align: center;
+  padding: 0.75rem;
+  font-size: 0.8rem;
+  border-top: 1px solid rgba(201,168,76,0.2);
+}
+.disclaimer-bar strong { color: var(--gold); }
+
+.how-it-works {
+  padding: 4rem 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.how-it-works h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--navy);
+  margin-bottom: 3rem;
+}
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+.step {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1px solid var(--gray-light);
+}
+.step-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 1.5rem;
+}
+.step h3 { color: var(--navy); margin-bottom: 0.5rem; }
+.step p { color: var(--gray); font-size: 0.9rem; line-height: 1.5; }
+
+.features {
+  background: white;
+  padding: 4rem 2rem;
+}
+.features-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.feature-card {
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--gray-light);
+  transition: border-color 0.2s;
+}
+.feature-card:hover { border-color: var(--gold); }
+.feature-card h4 { color: var(--navy); margin-bottom: 0.5rem; }
+.feature-card p { color: var(--gray); font-size: 0.85rem; line-height: 1.5; }
+
+/* ===== CLIENT DASHBOARD ===== */
+.dashboard { display: flex; min-height: calc(100vh - 52px); }
+.sidebar {
+  width: 240px;
+  background: var(--navy);
+  padding: 1.5rem 0;
+  flex-shrink: 0;
+}
+.sidebar-section { padding: 0 1rem; margin-bottom: 1.5rem; }
+.sidebar-label { color: #64748b; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; padding: 0 0.5rem; }
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  color: #94a3b8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.15s;
+}
+.sidebar-item:hover { background: rgba(255,255,255,0.05); color: white; }
+.sidebar-item.active { background: rgba(201,168,76,0.15); color: var(--gold); }
+.sidebar-item .icon { width: 18px; text-align: center; }
+
+.main-content { flex: 1; padding: 2rem; overflow-y: auto; }
+.page-header { margin-bottom: 2rem; }
+.page-header h2 { font-size: 1.5rem; color: var(--navy); }
+.page-header p { color: var(--gray); font-size: 0.9rem; margin-top: 0.25rem; }
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid var(--gray-light);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.card-header h3 { font-size: 1rem; color: var(--navy); }
+
+/* Document list */
+.doc-list { list-style: none; }
+.doc-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.doc-item:last-child { border-bottom: none; }
+.doc-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.doc-icon.pdf { background: #fee2e2; color: var(--red); }
+.doc-icon.img { background: #dbeafe; color: var(--blue); }
+.doc-icon.doc { background: #d1fae5; color: var(--green); }
+.doc-info { flex: 1; }
+.doc-info .name { font-size: 0.875rem; font-weight: 500; }
+.doc-info .meta { font-size: 0.75rem; color: var(--gray); margin-top: 2px; }
+.doc-status {
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+.doc-status.review { background: #fef3c7; color: #92400e; }
+.doc-status.reviewed { background: #d1fae5; color: #065f46; }
+.doc-status.new { background: #dbeafe; color: #1e40af; }
+
+/* Upload zone */
+.upload-zone {
+  border: 2px dashed var(--gray-light);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 1.5rem;
+}
+.upload-zone:hover { border-color: var(--gold); background: rgba(201,168,76,0.03); }
+.upload-zone .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+
+/* AI Chat Sidebar */
+.ai-panel {
+  width: 360px;
+  background: white;
+  border-left: 1px solid var(--gray-light);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+.ai-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--gray-light);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.ai-header .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+.ai-header h4 { font-size: 0.9rem; color: var(--navy); }
+.ai-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.ai-msg {
+  max-width: 90%;
+  padding: 0.65rem 0.9rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.ai-msg.bot {
+  background: #f1f5f9;
+  color: #334155;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.ai-msg.user {
+  background: var(--navy);
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.ai-input-area {
+  padding: 0.75rem;
+  border-top: 1px solid var(--gray-light);
+  display: flex;
+  gap: 0.5rem;
+}
+.ai-input-area input {
+  flex: 1;
+  border: 1px solid var(--gray-light);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  outline: none;
+}
+.ai-input-area input:focus { border-color: var(--gold); }
+.ai-input-area button {
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* ===== ADMIN DASHBOARD ===== */
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.stat-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.25rem;
+  border: 1px solid var(--gray-light);
+}
+.stat-card .label { font-size: 0.75rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-card .value { font-size: 1.75rem; font-weight: 700; color: var(--navy); margin: 0.25rem 0; }
+.stat-card .change { font-size: 0.75rem; color: var(--green); }
+
+.client-table { width: 100%; border-collapse: collapse; }
+.client-table th {
+  text-align: left;
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--gray-light);
+}
+.client-table td {
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+.client-table tr:hover td { background: #fafafa; }
+.client-name { font-weight: 600; color: var(--navy); }
+.client-state {
+  display: inline-block;
+  background: var(--navy);
+  color: var(--gold);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.activity-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; }
+.activity-dot.active { background: var(--green); }
+.activity-dot.pending { background: var(--orange); }
+.activity-dot.idle { background: var(--gray-light); }
+
+/* ===== INTAKE FORM ===== */
+.intake-container { max-width: 600px; margin: 0 auto; padding: 3rem 2rem; }
+.intake-container h2 { color: var(--navy); margin-bottom: 0.5rem; }
+.intake-container > p { color: var(--gray); margin-bottom: 2rem; }
+.form-group { margin-bottom: 1.25rem; }
+.form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--gray-light);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  font-family: inherit;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+.form-group textarea { resize: vertical; min-height: 100px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .ai-panel { display: none; }
+  .hero h1 { font-size: 2rem; }
+  .hero p { font-size: 1rem; }
+  .steps { grid-template-columns: 1fr; }
+  .admin-stats { grid-template-columns: 1fr 1fr; }
+}
+
+/* View toggle indicator */
+.view-indicator {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background: var(--navy);
+  color: var(--gold);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 200;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+<body>
+
+<!-- ===== TOP NAV ===== -->
+<nav class="top-nav">
+  <div class="nav-logo" onclick="showView('landing')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l3-3h12l3 3M3 6v12a3 3 0 003 3h12a3 3 0 003-3V6M3 6h18M9 12h6M9 16h6"/></svg>
+    Lawful Living Solution
+  </div>
+  <div class="nav-links">
+    <button onclick="showView('landing')" id="nav-landing" class="active">Home</button>
+    <button onclick="showView('intake')" id="nav-intake">Get Started</button>
+    <button onclick="showView('client')" id="nav-client">Client Portal</button>
+    <button onclick="showView('admin')" id="nav-admin">Admin<span class="nav-badge">3</span></button>
+  </div>
+</nav>
+
+<!-- ===== LANDING PAGE ===== -->
+<div id="view-landing" class="landing">
+  <div class="hero">
+    <h1>Navigate Your Legal Journey</h1>
+    <p>Empowering you with guided legal research, AI-assisted document analysis, and expert lay assistance — all in one platform.</p>
+    <div class="hero-cta">
+      <button class="btn btn-gold" onclick="showView('intake')">Get Started Free</button>
+      <button class="btn btn-outline" onclick="showView('client')">View Demo</button>
+    </div>
+  </div>
+  <div class="disclaimer-bar">
+    <strong>⚖️ Important:</strong> This is an educational platform providing legal information, not legal advice. You remain in control of all decisions.
+  </div>
+
+  <div class="how-it-works">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">📋</div>
+        <h3>1. Tell Us Your Situation</h3>
+        <p>Answer a few questions about your state and what you're facing. Our AI intake handles the rest — no 3 AM texts needed.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">📄</div>
+        <h3>2. Upload Your Documents</h3>
+        <p>Court filings, collection letters, contracts — upload them to your secure workspace. AI helps analyze and organize.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">🤖</div>
+        <h3>3. Get Guided Assistance</h3>
+        <p>Our AI guides you through understanding your documents, with human experts reviewing and providing suggestions.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="features-grid">
+      <div class="feature-card">
+        <h4>🔐 Secure Workspace</h4>
+        <p>Your documents are encrypted and private. Only you and your assigned advisor can access your workspace.</p>
+      </div>
+      <div class="feature-card">
+        <h4>🧠 AI-Powered Guidance</h4>
+        <p>Trained on legal procedures and research, our AI helps you understand what documents mean and what options exist.</p>
+      </div>
+      <div class="feature-card">
+        <h4>👥 Human Review</h4>
+        <p>Every document gets reviewed by an experienced lay assistant who provides personalized suggestions.</p>
+      </div>
+      <div class="feature-card">
+        <h4>📚 State-Specific Research</h4>
+        <p>Curated legal research organized by state — statutes, cases, and procedural rules relevant to your situation.</p>
+      </div>
+      <div class="feature-card">
+        <h4>📝 Response Builder</h4>
+        <p>Guided templates help you draft responses to claims, with AI suggestions and human approval.</p>
+      </div>
+      <div class="feature-card">
+        <h4>💰 Donation-Based</h4>
+        <p>Access the platform for free. Contribute what you can. Knowledge should be accessible to everyone.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== INTAKE FORM ===== -->
+<div id="view-intake" class="hidden">
+  <div class="intake-container">
+    <h2>Let's Get Started</h2>
+    <p>Tell us about your situation so we can set up your workspace. This takes about 2 minutes.</p>
+    <div class="card">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="Enter your full name">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label>Phone (optional)</label>
+        <input type="tel" placeholder="(555) 123-4567">
+      </div>
+      <div class="form-group">
+        <label>Your State</label>
+        <select>
+          <option value="">Select your state...</option>
+          <option>Florida</option><option>Maryland</option><option>California</option>
+          <option>New York</option><option>Texas</option><option>Georgia</option>
+          <option>Ohio</option><option>North Carolina</option><option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Type of Situation</label>
+        <select>
+          <option value="">Select the best match...</option>
+          <option>Court Filing / Lawsuit</option>
+          <option>Debt Collection</option>
+          <option>Foreclosure</option>
+          <option>Contract Dispute</option>
+          <option>Administrative / Government</option>
+          <option>Tax Matter</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Brief Description</label>
+        <textarea placeholder="In a few sentences, describe what you're dealing with. This helps us prepare your workspace and assign the right advisor."></textarea>
+      </div>
+      <div class="form-group">
+        <label>How did you hear about us?</label>
+        <select>
+          <option value="">Select...</option>
+          <option>TikTok</option><option>Facebook</option><option>Instagram</option>
+          <option>YouTube</option><option>Friend/Referral</option>
+          <option>Community Group</option><option>Other</option>
+        </select>
+      </div>
+      <button class="btn btn-gold" style="width:100%; margin-top:0.5rem" onclick="alert('✅ Workspace created! In the real app, this would send you login credentials and notify your advisor.')">
+        Create My Workspace →
+      </button>
+      <p style="text-align:center; font-size:0.75rem; color:var(--gray); margin-top:1rem">
+        By continuing, you acknowledge this is an educational platform providing legal information, not legal advice.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CLIENT DASHBOARD ===== -->
+<div id="view-client" class="hidden">
+  <div class="dashboard">
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Workspace</div>
+        <div class="sidebar-item active"><span class="icon">📄</span> My Documents</div>
+        <div class="sidebar-item"><span class="icon">✏️</span> Response Builder</div>
+        <div class="sidebar-item"><span class="icon">📚</span> Knowledge Base</div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Support</div>
+        <div class="sidebar-item"><span class="icon">📅</span> Book Session</div>
+        <div class="sidebar-item"><span class="icon">💬</span> Messages</div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Account</div>
+        <div class="sidebar-item"><span class="icon">⚙️</span> Settings</div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="page-header">
+        <h2>Welcome back, Mari 👋</h2>
+        <p>Maryland • Court Filing — Advisor: Hassan</p>
+      </div>
+
+      <div class="upload-zone">
+        <div class="icon">📎</div>
+        <div><strong>Drop files here</strong> or click to upload</div>
+        <div style="font-size:0.8rem; margin-top:0.25rem">PDF, DOC, JPG, PNG — up to 50MB</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>📁 My Documents</h3>
+          <button class="btn btn-sm btn-gold">+ Upload</button>
+        </div>
+        <ul class="doc-list">
+          <li class="doc-item">
+            <div class="doc-icon pdf">PDF</div>
+            <div class="doc-info">
+              <div class="name">Court_Summons_2026-01-15.pdf</div>
+              <div class="meta">Uploaded Jan 15 • 2.3 MB</div>
+            </div>
+            <span class="doc-status reviewed">✓ Reviewed</span>
+          </li>
+          <li class="doc-item">
+            <div class="doc-icon pdf">PDF</div>
+            <div class="doc-info">
+              <div class="name">Debt_Collection_Notice.pdf</div>
+              <div class="meta">Uploaded Jan 28 • 890 KB</div>
+            </div>
+            <span class="doc-status review">⏳ In Review</span>
+          </li>
+          <li class="doc-item">
+            <div class="doc-icon img">IMG</div>
+            <div class="doc-info">
+              <div class="name">Contract_Page1.jpg</div>
+              <div class="meta">Uploaded Feb 1 • 1.5 MB</div>
+            </div>
+            <span class="doc-status new">🆕 New</span>
+          </li>
+          <li class="doc-item">
+            <div class="doc-icon doc">DOC</div>
+            <div class="doc-info">
+              <div class="name">My_Response_Draft_v2.docx</div>
+              <div class="meta">Updated Feb 5 • 45 KB</div>
+            </div>
+            <span class="doc-status review">⏳ In Review</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>💡 Advisor Notes</h3>
+        </div>
+        <div style="background:#f0fdf4; border-radius:8px; padding:1rem; font-size:0.875rem; line-height:1.6; border-left:3px solid var(--green)">
+          <strong>Hassan — Feb 6:</strong> "Reviewed your response draft. Strong foundation. I've marked two areas where you might want to add specific statute references. Check the Maryland collection in Knowledge Base for § 3-305 and § 3-501. Let's discuss in our Thursday session."
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Chat Sidebar -->
+    <div class="ai-panel">
+      <div class="ai-header">
+        <div class="dot"></div>
+        <h4>AI Legal Guide</h4>
+        <span style="margin-left:auto; font-size:0.7rem; color:var(--gray)">Powered by Claude</span>
+      </div>
+      <div class="ai-messages">
+        <div class="ai-msg bot">
+          👋 Hi Mari! I'm your AI legal guide. I can help you understand your documents, find relevant statutes, and draft responses. What would you like to work on today?
+        </div>
+        <div class="ai-msg user">
+          I got a new debt collection notice. What should I look for first?
+        </div>
+        <div class="ai-msg bot">
+          Great question. Here's what to check first on any debt collection notice:<br><br>
+          <strong>1. Validation info</strong> — Does it include the creditor name, amount, and your right to dispute within 30 days?<br><br>
+          <strong>2. Statute of limitations</strong> — In Maryland, most consumer debt has a 3-year SOL. When was the alleged debt incurred?<br><br>
+          <strong>3. Proper service</strong> — Was this sent by certified mail or proper notice?<br><br>
+          Would you like to upload the notice so I can help analyze it? 📄<br><br>
+          <em style="font-size:0.75rem; color:#64748b">ℹ️ This is legal information for educational purposes, not legal advice.</em>
+        </div>
+        <div class="ai-msg user">
+          Yes, I just uploaded it. The debt is from 2022.
+        </div>
+        <div class="ai-msg bot">
+          I see the upload — <strong>Debt_Collection_Notice.pdf</strong>. Let me review it...<br><br>
+          Since the debt is from 2022, that's within Maryland's 3-year statute of limitations (expires ~2025). However, there are still several procedural defenses to check.<br><br>
+          I've flagged this for Hassan's review. In the meantime, I'd suggest looking at these resources in the Knowledge Base:<br><br>
+          📚 <strong>Maryland FDCPA Guide</strong><br>
+          📚 <strong>Debt Validation Rights — MD</strong><br><br>
+          Want me to help you start drafting a validation request?
+        </div>
+      </div>
+      <div class="ai-input-area">
+        <input type="text" placeholder="Ask about your case...">
+        <button>Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ADMIN DASHBOARD ===== -->
+<div id="view-admin" class="hidden">
+  <div class="dashboard">
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Admin</div>
+        <div class="sidebar-item active"><span class="icon">👥</span> Clients</div>
+        <div class="sidebar-item"><span class="icon">📋</span> Review Queue <span class="nav-badge" style="margin-left:auto">3</span></div>
+        <div class="sidebar-item"><span class="icon">📚</span> Knowledge Base</div>
+        <div class="sidebar-item"><span class="icon">📊</span> Analytics</div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Tools</div>
+        <div class="sidebar-item"><span class="icon">📝</span> Templates</div>
+        <div class="sidebar-item"><span class="icon">📅</span> Calendar</div>
+        <div class="sidebar-item"><span class="icon">💳</span> Payments</div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Team</div>
+        <div class="sidebar-item"><span class="icon">👤</span> Malika</div>
+        <div class="sidebar-item"><span class="icon">👤</span> Trayden</div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="page-header">
+        <h2>Admin Dashboard — Hassan</h2>
+        <p>8 active clients • 3 documents pending review</p>
+      </div>
+
+      <div class="admin-stats">
+        <div class="stat-card">
+          <div class="label">Active Clients</div>
+          <div class="value">8</div>
+          <div class="change">↑ 2 this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pending Reviews</div>
+          <div class="value" style="color:var(--orange)">3</div>
+          <div class="change" style="color:var(--orange)">Oldest: 2 days</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Sessions This Week</div>
+          <div class="value">5</div>
+          <div class="change">Next: Thu 2pm</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Revenue (Feb)</div>
+          <div class="value">$1,750</div>
+          <div class="change">↑ 12% vs Jan</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>👥 Client Overview</h3>
+          <button class="btn btn-sm btn-gold">+ New Client</button>
+        </div>
+        <table class="client-table">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>State</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Last Active</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="client-name">Mari</span></td>
+              <td><span class="client-state">MD</span></td>
+              <td>Court Filing</td>
+              <td><span class="activity-dot active"></span>Active</td>
+              <td>Today</td>
+            </tr>
+            <tr>
+              <td><span class="client-name">Karen</span></td>
+              <td><span class="client-state">CA</span></td>
+              <td>Foreclosure</td>
+              <td><span class="activity-dot active"></span>Active</td>
+              <td>Yesterday</td>
+            </tr>
+            <tr>
+              <td><span class="client-name">Maurice</span></td>
+              <td><span class="client-state">NY</span></td>
+              <td>Contract Dispute</td>
+              <td><span class="activity-dot pending"></span>Pending Review</td>
+              <td>Feb 6</td>
+            </tr>
+            <tr>
+              <td><span class="client-name">Tom</span></td>
+              <td><span class="client-state">WA</span></td>
+              <td>Administrative</td>
+              <td><span class="activity-dot active"></span>Active</td>
+              <td>Feb 5</td>
+            </tr>
+            <tr>
+              <td><span class="client-name">James R.</span></td>
+              <td><span class="client-state">TX</span></td>
+              <td>Debt Collection</td>
+              <td><span class="activity-dot pending"></span>Pending Review</td>
+              <td>Feb 4</td>
+            </tr>
+            <tr>
+              <td><span class="client-name">Sandra L.</span></td>
+              <td><span class="client-state">FL</span></td>
+              <td>Tax Matter</td>
+              <td><span class="activity-dot idle"></span>Idle</td>
+              <td>Jan 30</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>📋 Review Queue</h3>
+        </div>
+        <ul class="doc-list">
+          <li class="doc-item">
+            <div class="doc-icon pdf">PDF</div>
+            <div class="doc-info">
+              <div class="name">Debt_Collection_Notice.pdf</div>
+              <div class="meta">Mari (MD) • Uploaded Jan 28</div>
+            </div>
+            <button class="btn btn-sm btn-gold">Review</button>
+          </li>
+          <li class="doc-item">
+            <div class="doc-icon img">IMG</div>
+            <div class="doc-info">
+              <div class="name">Contract_Page1.jpg</div>
+              <div class="meta">Mari (MD) • Uploaded Feb 1</div>
+            </div>
+            <button class="btn btn-sm btn-gold">Review</button>
+          </li>
+          <li class="doc-item">
+            <div class="doc-icon pdf">PDF</div>
+            <div class="doc-info">
+              <div class="name">Foreclosure_Response_Draft.pdf</div>
+              <div class="meta">Karen (CA) • Uploaded Feb 4</div>
+            </div>
+            <button class="btn btn-sm btn-gold">Review</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Indicator -->
+<div class="view-indicator" id="view-indicator">📄 PROTOTYPE — Click nav to explore</div>
+
+<script>
+function showView(view) {
+  ['landing','intake','client','admin'].forEach(v => {
+    document.getElementById('view-' + v).classList.toggle('hidden', v !== view);
+    document.getElementById('nav-' + v).classList.toggle('active', v === view);
+  });
+  const labels = { landing: '🏠 Landing Page', intake: '📋 Client Intake', client: '👤 Client Dashboard', admin: '🔧 Admin Dashboard' };
+  document.getElementById('view-indicator').textContent = '📄 PROTOTYPE — ' + labels[view];
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
